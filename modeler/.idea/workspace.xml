@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="67ab6214-d5a0-45b8-97ce-791a8185b2a1" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="new-activiti-diagram.bpmn20" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="21Ggix0ylOUJ4DVnMFO0zEvqmqI" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Images" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Images" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.RunGui">
+    <configuration name="RunGui" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RunGui" />
+      <module name="pipe2.5-TSC" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SetIcon" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pipe.test.SetIcon" />
+      <module name="pipe2.5-TSC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pipe.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ThreadTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pipe.test.ThreadTest" />
+      <module name="pipe2.5-TSC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pipe.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.RunGui" />
+        <item itemvalue="Application.SetIcon" />
+        <item itemvalue="Application.ThreadTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="67ab6214-d5a0-45b8-97ce-791a8185b2a1" name="Changes" comment="" />
+      <created>1637572977615</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1637572977615</updated>
+      <workItem from="1637572978971" duration="4278000" />
+      <workItem from="1637583033967" duration="271000" />
+      <workItem from="1637583366659" duration="1245000" />
+      <workItem from="1637589883323" duration="81000" />
+      <workItem from="1637591359924" duration="1390000" />
+      <workItem from="1637596099514" duration="413000" />
+      <workItem from="1637632114537" duration="1817000" />
+      <workItem from="1637644595470" duration="4445000" />
+      <workItem from="1637651183831" duration="716000" />
+      <workItem from="1637662289821" duration="1903000" />
+      <workItem from="1637719565270" duration="585000" />
+      <workItem from="1637720246170" duration="478000" />
+      <workItem from="1637720987739" duration="70000" />
+      <workItem from="1637721077917" duration="14341000" />
+      <workItem from="1637741113155" duration="147000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

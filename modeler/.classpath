@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/jar/jpowergraph/jpowergraph-0.2-swing/lib/jpowergraph-0.2-common.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/jar/jpowergraph/jpowergraph-0.2-swing/lib/jpowergraph-0.2-swing.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/jar/jpowergraph/jpowergraph-0.2-swing/lib/powerswing-0.3.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/jar/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/jar/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/commons-imaging-1.0-alpha2.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/rt.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/Users/moqi/Documents/新加卷F/Java软件/flatlaf-2.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

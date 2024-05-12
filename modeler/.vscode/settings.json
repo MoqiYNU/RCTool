@@ -1,0 +1,8 @@
+{
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "aiXcoder.showTrayIcon": true,
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/moqi/Documents/新加卷F/Java软件/lombok.jar"
+    ]
+}
