@@ -17,13 +17,13 @@ import math
 from scipy import integrate
 
 
-# Expr1.²úÉúÎŞ³åÍ»µÄCERP-----------------------------------------------
+# Expr1.äº§ç”Ÿæ— å†²çªçš„CERP-----------------------------------------------
 def gen_resolved_CERP(path):
 
     exec_paths = gen_exec_paths(path)
 
-    cond_exec_paths = []  #ºòÑ¡Ö´ĞĞÂ·¾¶
-    conflict_exec_paths = []  #´æÔÚ×ÊÔ´³åÍ»µÄÖ´ĞĞÂ·¾¶
+    cond_exec_paths = []  #å€™é€‰æ‰§è¡Œè·¯å¾„
+    conflict_exec_paths = []  #å­˜åœ¨èµ„æºå†²çªçš„æ‰§è¡Œè·¯å¾„
     for exec_path in exec_paths:
         result = res_suff_check(exec_path)
         if result == 'Under-resourced':
@@ -47,14 +47,14 @@ def gen_resolved_CERP(path):
     for index in range(len(renamed_exec_paths)):
         idf_place = 'ep{}'.format(index)
         idf_places.append(idf_place)
-    # ÉèÖÃÖĞ¼ä¹ı³ÌµÄidf¿âËù
+    # è®¾ç½®ä¸­é—´è¿‡ç¨‹çš„idfåº“æ‰€
     inter_CERP.idf_places = idf_places
-    # ½«idf¿âËù¼ÓÈëµ½ÖĞ¼ä¹ı³ÌµÄ³õÊ¼MarkingÖĞ
+    # å°†idfåº“æ‰€åŠ å…¥åˆ°ä¸­é—´è¿‡ç¨‹çš„åˆå§‹Markingä¸­
     source_places = inter_CERP.source.get_infor()
     source_places = source_places + idf_places
     inter_CERP.source = nt.Marking(source_places)
 
-    # »ñÈ¡·ÖÖ§¿âËù-±äÇ¨¶Ô¼¯
+    # è·å–åˆ†æ”¯åº“æ‰€-å˜è¿å¯¹é›†
     branch_pairs = get_branch_pairs(inter_CERP)
     for [place, tran] in branch_pairs:
 
@@ -82,7 +82,7 @@ def gen_resolved_CERP(path):
     return inter_CERP
 
 
-# ÀûÓÃÊ±¼äÑÓÊ±ÖØÃüÃûÖ´ĞĞÂ·¾¶ÖĞ±äÇ¨¼¯
+# åˆ©ç”¨æ—¶é—´å»¶æ—¶é‡å‘½åæ‰§è¡Œè·¯å¾„ä¸­å˜è¿é›†
 def rename_exec_path(exec_path: nt.OpenNet):
     exec_path_copy = copy.deepcopy(exec_path)
     trans = exec_path.trans
@@ -97,20 +97,20 @@ def rename_exec_path(exec_path: nt.OpenNet):
     return exec_path_copy
 
 
-# »ñÈ¡·ÖÖ§¿âËù-±äÇ¨¶Ô¼¯
+# è·å–åˆ†æ”¯åº“æ‰€-å˜è¿å¯¹é›†
 def get_branch_pairs(CERP: nt.OpenNet):
     pairs = []
     flows = CERP.flows
     for place in CERP.inner_places:
         postset = nt.get_postset(flows, place)
-        # ps:º¬Ê±¼äµÄCERPÖĞÎŞÑ­»·½á¹¹
+        # ps:å«æ—¶é—´çš„CERPä¸­æ— å¾ªç¯ç»“æ„
         if len(postset) > 1:
             for tran in postset:
                 pairs.append([place, tran])
     return pairs
 
 
-# »ñÈ¡·ÖÖ§±äÇ¨¹ØÁªºÍÎ´¹ØÁªµÄ±êÊ¶
+# è·å–åˆ†æ”¯å˜è¿å…³è”å’Œæœªå…³è”çš„æ ‡è¯†
 def get_bt_idfs(branch_tran, renamed_exec_paths):
     asso_idfs = []
     unasso_idfs = []
@@ -122,7 +122,7 @@ def get_bt_idfs(branch_tran, renamed_exec_paths):
     return asso_idfs, unasso_idfs
 
 
-# Expr2.±È½ÏÖ´ĞĞÂ·¾¶-----------------------------------------------
+# Expr2.æ¯”è¾ƒæ‰§è¡Œè·¯å¾„-----------------------------------------------
 def optimize_res_conf_exec_path(path):
 
     base_name, file_extension = os.path.splitext(path)
@@ -136,9 +136,9 @@ def optimize_res_conf_exec_path(path):
 
         if result == 'Partially resourced':
             gen_resolved_exec_path_NSGAII(exec_path)
-            # start_time = time.time()  #¿ªÊ¼Ê±¼ä
+            # start_time = time.time()  #å¼€å§‹æ—¶é—´
             # resolved_exec_path = gen_resolved_exec_path_NSGAII(exec_path)
-            # end_time = time.time()  #½áÊøÊ±¼ä
+            # end_time = time.time()  #ç»“æŸæ—¶é—´
             # total_time = (end_time - start_time) * 1000.0
             # resolved_exec_path.net_to_dot('solu', True)
             # fire_time_map, exec_time = calc_fire_time(resolved_exec_path)
@@ -148,23 +148,23 @@ def optimize_res_conf_exec_path(path):
             # print('EPA Time: ', total_time)
             # print('\n................................................')
 
-            # ĞòÁĞ»¯½â¾öÖ´ĞĞÂ·¾¶
-            # path = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/ÊµÑé½á¹û/EPA-{}.pkl'.format(case)
+            # åºåˆ—åŒ–è§£å†³æ‰§è¡Œè·¯å¾„
+            # path = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/å®éªŒç»“æœ/EPA-{}.pkl'.format(case)
             # with open(path, 'wb') as f:
             #     pickle.dump(resolved_exec_path, f)
 
-            # # 1.1´´½¨ÎÄ¼ş¶ÔÏó
+            # # 1.1åˆ›å»ºæ–‡ä»¶å¯¹è±¡
             # print('fire_time_map:', fire_time_map)
-            # csv_name = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/ÊµÑé½á¹û/csv½á¹û/EPA-{}.csv'.format(
+            # csv_name = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/å®éªŒç»“æœ/csvç»“æœ/EPA-{}.csv'.format(
             #     case)
             # with open(csv_name, 'w') as f:
-            #     # 1.2»ùÓÚÎÄ¼ş¶ÔÏó¹¹½¨csvĞ´Èë¶ÔÏó
+            #     # 1.2åŸºäºæ–‡ä»¶å¯¹è±¡æ„å»ºcsvå†™å…¥å¯¹è±¡
             #     writer = csv.writer(f)
-            #     # 1.3¹¹½¨ÁĞ±íÍ·
+            #     # 1.3æ„å»ºåˆ—è¡¨å¤´
             #     writer.writerow(['Tran', 'Min Firing Time', 'Max Firing Time'])
-            #     # 1.4ÌîÈëÄÚÈİ
+            #     # 1.4å¡«å…¥å†…å®¹
             #     for key, value in fire_time_map.items():
-            #         if key.startswith('Td') or key in ['ti', 'to']:  # Ìø¹ıÑÓÊ±±äÇ¨
+            #         if key.startswith('Td') or key in ['ti', 'to']:  # è·³è¿‡å»¶æ—¶å˜è¿
             #             continue
             #         row = []
             #         row.append(key)
@@ -173,13 +173,13 @@ def optimize_res_conf_exec_path(path):
             #         writer.writerow(row)
 
 
-# 1.²úÉúÖ´ĞĞÂ·¾¶-----------------------------------------------
+# 1.äº§ç”Ÿæ‰§è¡Œè·¯å¾„-----------------------------------------------
 def gen_exec_paths(path):
     exec_paths = []
     proj_nets, comp_net = erpu.net_proj(path)
     # comp_net.net_to_dot('exec_path', True)
     for proj_net in proj_nets:
-        # Í¶Ó°ÍøÒªÊÇºÏ·¨µÄ
+        # æŠ•å½±ç½‘è¦æ˜¯åˆæ³•çš„
         print('legal:', proj_net_is_legal(proj_net))
         if proj_net_is_legal(proj_net):
             exec_paths.append(proj_net)
@@ -187,42 +187,42 @@ def gen_exec_paths(path):
 
 
 def proj_net_is_legal(proj_net: nt.OpenNet):
-    # Note:Ã¿ÌõÖ´ĞĞÂ·¾¶±»¸ÄÔìÎª¹¤×÷Á÷Íø
+    # Note:æ¯æ¡æ‰§è¡Œè·¯å¾„è¢«æ”¹é€ ä¸ºå·¥ä½œæµç½‘
     start_end_places = ['i', 'o']
     flows = proj_net.flows
-    # 1)ÈôplaceµÄÇ°¼¯»òºó¼¯Îª¿Õ,ÔòpÊÇÔ´¿âËù»ò»ã¿âËù
+    # 1)è‹¥placeçš„å‰é›†æˆ–åé›†ä¸ºç©º,åˆ™pæ˜¯æºåº“æ‰€æˆ–æ±‡åº“æ‰€
     for place in proj_net.places:
         if len(nt.get_preset(flows, place)) == 0 or len(
                 nt.get_postset(flows, place)) == 0:
             if place not in start_end_places:
-                print('Ç°¼¯»òºó¼¯Îª¿Õ', place)
+                print('å‰é›†æˆ–åé›†ä¸ºç©º', place)
                 return False
-    # 2)Í¶Ó°ÍøÖĞÎŞ»·½á¹¹
+    # 2)æŠ•å½±ç½‘ä¸­æ— ç¯ç»“æ„
     dfs_obj = cu.DFS()
     to_graph = proj_net.to_graph()
     print(to_graph)
     dfs_obj.dfs('i', to_graph)
     circles = dfs_obj.circles
     if circles:
-        print('ÓĞ»·........')
+        print('æœ‰ç¯........')
         return False
     return True
 
 
-# 2.¼ÆËãÖ´ĞĞÂ·¾¶µÄ±äÇ¨µã»ğÊ±¼ä------------------------------------
+# 2.è®¡ç®—æ‰§è¡Œè·¯å¾„çš„å˜è¿ç‚¹ç«æ—¶é—´------------------------------------
 def calc_fire_time(exec_path: nt.OpenNet):
     fire_time_map = {}
     trans = exec_path.trans
     flows = exec_path.flows
-    # ÉèÖÃ³õÊ¼±äÇ¨'ti'µã»ğÊ±¼äÎª[0,0]
+    # è®¾ç½®åˆå§‹å˜è¿'ti'ç‚¹ç«æ—¶é—´ä¸º[0,0]
     fire_time_map['ti'] = [0, 0]
     visited_trans = ['ti']
-    # µü´úµØ¼ÆËã±äÇ¨¹ØÁªµã»ğÊ±¼ä
+    # è¿­ä»£åœ°è®¡ç®—å˜è¿å…³è”ç‚¹ç«æ—¶é—´
     while len(trans) != len(visited_trans):
         rest_trans = list(set(trans) - set(visited_trans))
         one_tran = get_one_deter_tran(rest_trans, flows, fire_time_map)
         # print('one_tran', one_tran)
-        # ¼ÆËãtranµÄµã»ğÊ±¼ä
+        # è®¡ç®—trançš„ç‚¹ç«æ—¶é—´
         preset_trans_one = get_preset_trans(flows, one_tran)
         # print(preset_trans_one)
         low_times = []
@@ -231,15 +231,15 @@ def calc_fire_time(exec_path: nt.OpenNet):
             [a, b] = fire_time_map[tran]
             low_times.append(a)
             upper_times.append(b)
-        # Ğè¼ÓÉÏ×Ô¼ºµÄfiring delay
+        # éœ€åŠ ä¸Šè‡ªå·±çš„firing delay
         [dl, du] = exec_path.tran_delay_map[one_tran]
         fire_time_map[one_tran] = [max(low_times) + dl, max(upper_times) + du]
         visited_trans.append(one_tran)
-    # ·µ»ØÃ¿Ìõ±äÇ¨µã»ğÊ±¼äºÍÖ´ĞĞÂ·¾¶µÄÍê³ÉÊ±¼ä
+    # è¿”å›æ¯æ¡å˜è¿ç‚¹ç«æ—¶é—´å’Œæ‰§è¡Œè·¯å¾„çš„å®Œæˆæ—¶é—´
     return fire_time_map, fire_time_map['to']
 
 
-# »ñÈ¡Ò»¸öÄÜ¹»¼ÆËãµã»ğÊ±¼äµÄ±äÇ¨
+# è·å–ä¸€ä¸ªèƒ½å¤Ÿè®¡ç®—ç‚¹ç«æ—¶é—´çš„å˜è¿
 def get_one_deter_tran(rest_trans, flows, fire_time_map):
     for tran in rest_trans:
         if tran_is_deter(tran, flows, fire_time_map):
@@ -247,7 +247,7 @@ def get_one_deter_tran(rest_trans, flows, fire_time_map):
     return None
 
 
-# È·¶¨±äÇ¨ÄÜ·ñ¼ÆËãµã»ğÊ±¼ä
+# ç¡®å®šå˜è¿èƒ½å¦è®¡ç®—ç‚¹ç«æ—¶é—´
 def tran_is_deter(tran, flows, fire_time_map):
     preset_trans = get_preset_trans(flows, tran)
     if set(preset_trans).issubset(set(fire_time_map.keys())):
@@ -255,7 +255,7 @@ def tran_is_deter(tran, flows, fire_time_map):
     return False
 
 
-# »ñÈ¡tranÇ°¼¯µÄÇ°¼¯(±äÇ¨¼¯)
+# è·å–tranå‰é›†çš„å‰é›†(å˜è¿é›†)
 def get_preset_trans(flows, tran):
     preset_trans = set()
     preset_places = nt.get_preset(flows, tran)
@@ -265,17 +265,17 @@ def get_preset_trans(flows, tran):
     return list(preset_trans)
 
 
-# 3.¼ì²âÖ´ĞĞÂ·¾¶µÄ×ÊÔ´³ä·ÖĞÔ------------------------------------
+# 3.æ£€æµ‹æ‰§è¡Œè·¯å¾„çš„èµ„æºå……åˆ†æ€§------------------------------------
 def res_suff_check(exec_path: nt.OpenNet):
     res_places = exec_path.res_places
     res_map = get_res_map(exec_path)
     for res in res_places:
         res_property = exec_path.res_property[res]
-        if res_property == 1:  #Ïû»¯ĞÔ×ÊÔ´
+        if res_property == 1:  #æ¶ˆåŒ–æ€§èµ„æº
             if res not in exec_path.init_res or len(res_map[res][0]) > 1:
                 print('Under-resourced res:', res)
                 return 'Under-resourced'
-        else:  #ÖØ¸´ĞÔ×ÊÔ´
+        else:  #é‡å¤æ€§èµ„æº
             if res not in exec_path.init_res:
                 print('Under-resourced res:', res)
                 return 'Under-resourced'
@@ -286,7 +286,7 @@ def res_suff_check(exec_path: nt.OpenNet):
         return 'Resourced'
 
 
-# »ñÈ¡ËùÓĞµÄ×ÊÔ´³åÍ»¶Ô
+# è·å–æ‰€æœ‰çš„èµ„æºå†²çªå¯¹
 def get_res_confs(exec_path: nt.OpenNet):
     res_confs = []
     fire_time_map, exec_time = calc_fire_time(exec_path)
@@ -294,7 +294,7 @@ def get_res_confs(exec_path: nt.OpenNet):
     for [ti, tj] in pote_res_confs:
         [s_ti, e_ti] = fire_time_map[ti]
         [s_tj, e_tj] = fire_time_map[tj]
-        # Note:ÅĞ¶ÏÁ½¸öÇø¼äÊÇ·ñÖØµş
+        # Note:åˆ¤æ–­ä¸¤ä¸ªåŒºé—´æ˜¯å¦é‡å 
         overlap = min(e_ti, e_tj) - max(s_ti, s_tj)
         if overlap > 0:
             print('conflict: ', [ti, tj], [s_ti, e_ti], [s_tj, e_tj])
@@ -302,21 +302,21 @@ def get_res_confs(exec_path: nt.OpenNet):
     return res_confs
 
 
-# »ñÈ¡ËùÓĞµÄ×ÊÔ´³åÍ»¶Ô
+# è·å–æ‰€æœ‰çš„èµ„æºå†²çªå¯¹
 def get_res_confs_by_fire_time(exec_path: nt.OpenNet, fire_time_map):
     res_confs = []
     pote_res_confs = get_pote_res_confs(exec_path)
     for [ti, tj] in pote_res_confs:
         [s_ti, e_ti] = fire_time_map[ti]
         [s_tj, e_tj] = fire_time_map[tj]
-        # Note:ÅĞ¶ÏÁ½¸öÇø¼äÊÇ·ñÖØµş
+        # Note:åˆ¤æ–­ä¸¤ä¸ªåŒºé—´æ˜¯å¦é‡å 
         overlap = min(e_ti, e_tj) - max(s_ti, s_tj)
         if overlap > 0:
             res_confs.append([ti, tj])
     return res_confs
 
 
-# »ñÈ¡ËùÓĞµÄÇ±ÔÚ×ÊÔ´³åÍ»¶Ô
+# è·å–æ‰€æœ‰çš„æ½œåœ¨èµ„æºå†²çªå¯¹
 def get_pote_res_confs(exec_path: nt.OpenNet):
     pote_res_confs = []
     res_map = get_res_map(exec_path)
@@ -333,7 +333,7 @@ def get_pote_res_confs(exec_path: nt.OpenNet):
     return pote_res_confs
 
 
-# ÅĞ¶ÏÄ³¸ölistÊÇ·ñ´æÔÚ
+# åˆ¤æ–­æŸä¸ªlistæ˜¯å¦å­˜åœ¨
 def is_exist(list, list_set):
     for temp_list in list_set:
         if set(list) == set(temp_list):
@@ -341,7 +341,7 @@ def is_exist(list, list_set):
     return False
 
 
-# »ñÈ¡ËùÓĞ×ÊÔ´µÄÇëÇó±äÇ¨¼¯ºÍÊÍ·Å±äÇ¨¼¯
+# è·å–æ‰€æœ‰èµ„æºçš„è¯·æ±‚å˜è¿é›†å’Œé‡Šæ”¾å˜è¿é›†
 def get_res_map(exec_path: nt.OpenNet):
     res_map = {}
     res_places = exec_path.res_places
@@ -360,10 +360,10 @@ def get_res_map(exec_path: nt.OpenNet):
     return res_map
 
 
-# 4.Í¨¹ıNSGAII»ñÈ¡·ÇÖ§ÅäÖ´ĞĞÂ·¾¶--------------------------------------
+# 4.é€šè¿‡NSGAIIè·å–éæ”¯é…æ‰§è¡Œè·¯å¾„--------------------------------------
 def gen_resolved_exec_path_NSGAII(exec_path: nt.OpenNet):
 
-    # ps:Ê×ÏÈ¼ÆËã±äÇ¨µã»ğÊ±¼ä,²»ÊÇÃ¿´Î¼ÆËã¿ªÏúºÜ´ó
+    # ps:é¦–å…ˆè®¡ç®—å˜è¿ç‚¹ç«æ—¶é—´,ä¸æ˜¯æ¯æ¬¡è®¡ç®—å¼€é”€å¾ˆå¤§
     org_fire_time_map, [x1, y1] = calc_fire_time(exec_path)
 
     pote_res_confs = get_pote_res_confs(exec_path)
@@ -381,11 +381,11 @@ def gen_resolved_exec_path_NSGAII(exec_path: nt.OpenNet):
         lbin.append(1)
         ubin.append(1)
 
-    @ea.Problem.single  #¹Ø¼ü:¶¨Òåµ¥È¾É«Ìå
-    def evalVars(Vars):  # ¶¨ÒåÄ¿±êº¯Êı(º¬Ô¼Êø)
-        solu = Vars.tolist()  #VarsÊÇnÎ¬Êı×é
+    @ea.Problem.single  #å…³é”®:å®šä¹‰å•æŸ“è‰²ä½“
+    def evalVars(Vars):  # å®šä¹‰ç›®æ ‡å‡½æ•°(å«çº¦æŸ)
+        solu = Vars.tolist()  #Varsæ˜¯nç»´æ•°ç»„
 
-        # Éî¿½±´exec_path
+        # æ·±æ‹·è´exec_path
         exec_path_copy = copy.deepcopy(exec_path)
         solu_exec_path = get_solu_exec_path_by_fire_time(
             solu, pote_res_confs, org_fire_time_map, exec_path_copy)
@@ -401,7 +401,7 @@ def gen_resolved_exec_path_NSGAII(exec_path: nt.OpenNet):
         disc = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
         # if x2 >= y1:
         #     disc = 0
-        # else:  # ÑÓÊ±ÂÊ
+        # else:  # å»¶æ—¶ç‡
         #     disc = 1 - finish_earlier([x2, y2], [x1, y1])
 
         # disc = 1 - finish_earlier_pre([x2, y2], [x1, y1])
@@ -410,28 +410,28 @@ def gen_resolved_exec_path_NSGAII(exec_path: nt.OpenNet):
               [x2, y2], disc)
 
         ObjV = [float(disc)]
-        CV = len(res_confs)  # ¼ÆËãÎ¥·´Ô¼Êø³Ì¶È
+        CV = len(res_confs)  # è®¡ç®—è¿åçº¦æŸç¨‹åº¦
 
         return ObjV, CV
 
     problem = ea.Problem(
         name='SSGA',
-        M=1,  # Ä¿±êÎ¬Êı
-        maxormins=[1],  # Ä¿±ê×îĞ¡×î´ó»¯±ê¼ÇÁĞ±í£¬1£º×îĞ¡»¯¸ÃÄ¿±ê£»-1£º×î´ó»¯¸ÃÄ¿±ê
-        Dim=size,  # ¾ö²ß±äÁ¿Î¬Êı
-        varTypes=varTypes,  # ¾ö²ß±äÁ¿µÄÀàĞÍÁĞ±í£¬0£ºÊµÊı£»1£ºÕûÊı
-        lb=lb,  # ¾ö²ß±äÁ¿ÏÂ½ç
-        ub=ub,  # ¾ö²ß±äÁ¿ÉÏ½çs
+        M=1,  # ç›®æ ‡ç»´æ•°
+        maxormins=[1],  # ç›®æ ‡æœ€å°æœ€å¤§åŒ–æ ‡è®°åˆ—è¡¨ï¼Œ1ï¼šæœ€å°åŒ–è¯¥ç›®æ ‡ï¼›-1ï¼šæœ€å¤§åŒ–è¯¥ç›®æ ‡
+        Dim=size,  # å†³ç­–å˜é‡ç»´æ•°
+        varTypes=varTypes,  # å†³ç­–å˜é‡çš„ç±»å‹åˆ—è¡¨ï¼Œ0ï¼šå®æ•°ï¼›1ï¼šæ•´æ•°
+        lb=lb,  # å†³ç­–å˜é‡ä¸‹ç•Œ
+        ub=ub,  # å†³ç­–å˜é‡ä¸Šç•Œs
         lbin=lbin,
         ubin=ubin,
         evalVars=evalVars)
 
-    # ¹¹½¨Ëã·¨soea_SEGA_templet
+    # æ„å»ºç®—æ³•soea_SEGA_templet
     algorithm = ea.soea_steadyGA_templet(
         problem,
         ea.Population(Encoding='RI', NIND=100),
-        MAXGEN=200,  # ×î´ó½ø»¯´úÊı¡£
-        logTras=0,  # ±íÊ¾Ã¿¸ô¶àÉÙ´ú¼ÇÂ¼Ò»´ÎÈÕÖ¾ĞÅÏ¢£¬0±íÊ¾²»¼ÇÂ¼¡£
+        MAXGEN=200,  # æœ€å¤§è¿›åŒ–ä»£æ•°ã€‚
+        logTras=0,  # è¡¨ç¤ºæ¯éš”å¤šå°‘ä»£è®°å½•ä¸€æ¬¡æ—¥å¿—ä¿¡æ¯ï¼Œ0è¡¨ç¤ºä¸è®°å½•ã€‚
         # trappedValue=1e-6,
         # maxTrappedCount=10
     )
@@ -440,27 +440,27 @@ def gen_resolved_exec_path_NSGAII(exec_path: nt.OpenNet):
         algorithm,
         seed=1,
         verbose=True,
-        drawing=0,  #²»»æÖÆ×îÖÕ½á¹ûÍ¼
+        drawing=0,  #ä¸ç»˜åˆ¶æœ€ç»ˆç»“æœå›¾
         outputMsg=True,
         drawLog=False,
         saveFlag=False,
     )
 
-    # # ¿ÉĞĞ½â(ps:Ã¿¸öÊÇ·ÇÖ§ÅäµÄµ«¿ÉÄÜ´æÔÚÖØ¸´)
+    # # å¯è¡Œè§£(ps:æ¯ä¸ªæ˜¯éæ”¯é…çš„ä½†å¯èƒ½å­˜åœ¨é‡å¤)
     best_solu = res['Vars'].tolist()[0]
     print('feasible_solus:', best_solu)
 
     exec_path_copy = copy.deepcopy(exec_path)
     resolved_exec_path = get_solu_exec_path(best_solu, pote_res_confs,
                                             exec_path_copy)
-    # »ñÈ¡ÒÑ½â¾öµÄÖ´ĞĞÂ·¾¶
+    # è·å–å·²è§£å†³çš„æ‰§è¡Œè·¯å¾„
     return resolved_exec_path
 
 
-# 4.Í¨¹ıSSGA»ñÈ¡·ÇÖ§ÅäÖ´ĞĞÂ·¾¶--------------------------------------
+# 4.é€šè¿‡SSGAè·å–éæ”¯é…æ‰§è¡Œè·¯å¾„--------------------------------------
 def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
 
-    # ps:Ê×ÏÈ¼ÆËã±äÇ¨µã»ğÊ±¼ä,²»ÊÇÃ¿´Î¼ÆËã¿ªÏúºÜ´ó
+    # ps:é¦–å…ˆè®¡ç®—å˜è¿ç‚¹ç«æ—¶é—´,ä¸æ˜¯æ¯æ¬¡è®¡ç®—å¼€é”€å¾ˆå¤§
     org_fire_time_map, [x1, y1] = calc_fire_time(exec_path)
 
     pote_res_confs = get_pote_res_confs(exec_path)
@@ -478,14 +478,14 @@ def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
         lbin.append(1)
         ubin.append(1)
 
-    def evalVars(pop):  # ¶¨ÒåÄ¿±êº¯Êı(º¬Ô¼Êø)
+    def evalVars(pop):  # å®šä¹‰ç›®æ ‡å‡½æ•°(å«çº¦æŸ)
         # print('Vars:', pop, len(pop), pop[0])
         objs = []
         const = []
         for i in range(len(pop)):
             solu = pop[i].tolist()
             # print('solu:', solu)
-            # Éî¿½±´exec_path
+            # æ·±æ‹·è´exec_path
             exec_path_copy = copy.deepcopy(exec_path)
             solu_exec_path = get_solu_exec_path_by_fire_time(
                 solu, pote_res_confs, org_fire_time_map, exec_path_copy)
@@ -493,7 +493,7 @@ def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
             res_confs = get_res_confs_by_fire_time(solu_exec_path,
                                                    solu_fire_time_map)
             objs.append([x2, y2])
-            # ps:len(res_confs)ĞèÒª×ªÎª[]
+            # ps:len(res_confs)éœ€è¦è½¬ä¸º[]
             const.append([len(res_confs)])
 
         # fitness = []
@@ -512,7 +512,7 @@ def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
         #         prob = finish_earlier([x1, y1], [x2, y2])
         #         sum_prob += sum_prob + prob
 
-        #     # sum_probĞèÒª×ªÎªfloatÇÒĞèÒª×ªÎª[prob]
+        #     # sum_probéœ€è¦è½¬ä¸ºfloatä¸”éœ€è¦è½¬ä¸º[prob]
         #     fitness.append([float(sum_prob / size)])
 
         min_exec_time = min([x for [x, y] in objs])
@@ -524,9 +524,9 @@ def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
         fitness = []
         for [x, y] in objs:
             prob = finish_earlier([x, y], [min_exec_time, max_exec_time])
-            # ĞèÒª×ªÎªfloat
+            # éœ€è¦è½¬ä¸ºfloat
             prob = float(prob * 100)
-            # ps:probĞèÒª×ªÎª[prob]
+            # ps:probéœ€è¦è½¬ä¸º[prob]
             fitness.append([prob])
 
         print('fitness:', np.array(fitness))
@@ -542,28 +542,28 @@ def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
         # print('org_exec_time, solu_exec_time, disc:', [x1, y1], [x2, y2], disc)
 
         ObjV = np.array(fitness)
-        CV = np.array(const)  # ¼ÆËãÎ¥·´Ô¼Êø³Ì¶È
+        CV = np.array(const)  # è®¡ç®—è¿åçº¦æŸç¨‹åº¦
 
         return ObjV, CV
 
     problem = ea.Problem(
         name='SSGA',
-        M=1,  # Ä¿±êÎ¬Êı
-        maxormins=[-1],  # Ä¿±ê×îĞ¡×î´ó»¯±ê¼ÇÁĞ±í£¬1£º×îĞ¡»¯¸ÃÄ¿±ê£»-1£º×î´ó»¯¸ÃÄ¿±ê
-        Dim=size,  # ¾ö²ß±äÁ¿Î¬Êı
-        varTypes=varTypes,  # ¾ö²ß±äÁ¿µÄÀàĞÍÁĞ±í£¬0£ºÊµÊı£»1£ºÕûÊı
-        lb=lb,  # ¾ö²ß±äÁ¿ÏÂ½ç
-        ub=ub,  # ¾ö²ß±äÁ¿ÉÏ½çs
+        M=1,  # ç›®æ ‡ç»´æ•°
+        maxormins=[-1],  # ç›®æ ‡æœ€å°æœ€å¤§åŒ–æ ‡è®°åˆ—è¡¨ï¼Œ1ï¼šæœ€å°åŒ–è¯¥ç›®æ ‡ï¼›-1ï¼šæœ€å¤§åŒ–è¯¥ç›®æ ‡
+        Dim=size,  # å†³ç­–å˜é‡ç»´æ•°
+        varTypes=varTypes,  # å†³ç­–å˜é‡çš„ç±»å‹åˆ—è¡¨ï¼Œ0ï¼šå®æ•°ï¼›1ï¼šæ•´æ•°
+        lb=lb,  # å†³ç­–å˜é‡ä¸‹ç•Œ
+        ub=ub,  # å†³ç­–å˜é‡ä¸Šç•Œs
         lbin=lbin,
         ubin=ubin,
         evalVars=evalVars)
 
-    # ¹¹½¨Ëã·¨soea_SEGA_templet
+    # æ„å»ºç®—æ³•soea_SEGA_templet
     algorithm = ea.soea_steadyGA_templet(
         problem,
         ea.Population(Encoding='RI', NIND=50),
-        MAXGEN=200,  # ×î´ó½ø»¯´úÊı¡£
-        logTras=0,  # ±íÊ¾Ã¿¸ô¶àÉÙ´ú¼ÇÂ¼Ò»´ÎÈÕÖ¾ĞÅÏ¢£¬0±íÊ¾²»¼ÇÂ¼¡£
+        MAXGEN=200,  # æœ€å¤§è¿›åŒ–ä»£æ•°ã€‚
+        logTras=0,  # è¡¨ç¤ºæ¯éš”å¤šå°‘ä»£è®°å½•ä¸€æ¬¡æ—¥å¿—ä¿¡æ¯ï¼Œ0è¡¨ç¤ºä¸è®°å½•ã€‚
         # trappedValue=1e-6,
         # maxTrappedCount=10
     )
@@ -572,24 +572,24 @@ def gen_resolved_exec_path_SSGA(exec_path: nt.OpenNet):
         algorithm,
         seed=1,
         verbose=True,
-        drawing=1,  #²»»æÖÆ×îÖÕ½á¹ûÍ¼
+        drawing=1,  #ä¸ç»˜åˆ¶æœ€ç»ˆç»“æœå›¾
         outputMsg=True,
         drawLog=False,
         saveFlag=False,
     )
 
-    # # ¿ÉĞĞ½â(ps:Ã¿¸öÊÇ·ÇÖ§ÅäµÄµ«¿ÉÄÜ´æÔÚÖØ¸´)
+    # # å¯è¡Œè§£(ps:æ¯ä¸ªæ˜¯éæ”¯é…çš„ä½†å¯èƒ½å­˜åœ¨é‡å¤)
     best_solu = res['Vars'].tolist()[0]
     print('feasible_solus:', best_solu)
 
     exec_path_copy = copy.deepcopy(exec_path)
     resolved_exec_path = get_solu_exec_path(best_solu, pote_res_confs,
                                             exec_path_copy)
-    # »ñÈ¡ÒÑ½â¾öµÄÖ´ĞĞÂ·¾¶
+    # è·å–å·²è§£å†³çš„æ‰§è¡Œè·¯å¾„
     return resolved_exec_path
 
 
-# »ñÈ¡½âsolu¸üĞÂºóµÄÖ´ĞĞÂ·¾¶
+# è·å–è§£soluæ›´æ–°åçš„æ‰§è¡Œè·¯å¾„
 def get_solu_exec_path(solu, pote_res_confs, exec_path_copy: nt.OpenNet):
     index = 0
     # print('test: ', solu, pote_res_confs)
@@ -600,14 +600,14 @@ def get_solu_exec_path(solu, pote_res_confs, exec_path_copy: nt.OpenNet):
         [s_tj, e_tj] = fire_time_map[tj]
         if solu[k] == 0:
             continue
-        elif solu[k] == -1:  #tiÇ°Ãæ²åÈë
+        elif solu[k] == -1:  #tiå‰é¢æ’å…¥
             if e_tj - s_ti <= 0:
                 continue
             interval = [e_tj - s_ti, e_tj - s_ti]
             exec_path_copy = insert_delay_tran(index, interval, ti,
                                                exec_path_copy)
             index += 1
-        else:  #tjÇ°Ãæ²åÈë
+        else:  #tjå‰é¢æ’å…¥
             if e_ti - s_tj <= 0:
                 continue
             interval = [e_ti - s_tj, e_ti - s_tj]
@@ -627,14 +627,14 @@ def get_solu_exec_path_by_fire_time(solu, pote_res_confs, fire_time_map,
         [s_tj, e_tj] = fire_time_map[tj]
         if solu[k] == 0:
             continue
-        elif solu[k] == -1:  #tiÇ°Ãæ²åÈë
+        elif solu[k] == -1:  #tiå‰é¢æ’å…¥
             if e_tj - s_ti <= 0:
                 continue
             interval = [e_tj - s_ti, e_tj - s_ti]
             exec_path_copy = insert_delay_tran(index, interval, ti,
                                                exec_path_copy)
             index += 1
-        else:  #tjÇ°Ãæ²åÈë
+        else:  #tjå‰é¢æ’å…¥
             if e_ti - s_tj <= 0:
                 continue
             interval = [e_ti - s_tj, e_ti - s_tj]
@@ -644,9 +644,9 @@ def get_solu_exec_path_by_fire_time(solu, pote_res_confs, fire_time_map,
     return exec_path_copy
 
 
-# ÔÚÖ´ĞĞÂ·¾¶ÖĞ±äÇ¨tranÇ°²åÈëÒ»¸öÑÓÊ±±äÇ¨
+# åœ¨æ‰§è¡Œè·¯å¾„ä¸­å˜è¿tranå‰æ’å…¥ä¸€ä¸ªå»¶æ—¶å˜è¿
 def insert_delay_tran(index, interval, tran, exec_path_copy: nt.OpenNet):
-    # Note:Ç°¼¯ÓĞ¶à¸ö
+    # Note:å‰é›†æœ‰å¤šä¸ª
     places = nt.get_preset(exec_path_copy.flows, tran)
     for place in places:
         exec_path_copy.rov_flow(place, tran)
@@ -663,7 +663,7 @@ def insert_delay_tran(index, interval, tran, exec_path_copy: nt.OpenNet):
     return exec_path_copy
 
 
-# »ñÈ¡Ö´ĞĞÊ±¼ä×î¶ÌµÄÖ´ĞĞÂ·¾¶
+# è·å–æ‰§è¡Œæ—¶é—´æœ€çŸ­çš„æ‰§è¡Œè·¯å¾„
 def get_exec_path_st(exec_paths):
     if len(exec_paths) > 1:
         exec_path1 = exec_paths[0]
@@ -672,13 +672,13 @@ def get_exec_path_st(exec_paths):
             fire_time_map1, [a, b] = calc_fire_time(exec_path1)
             exec_path2 = exec_paths[iter_num]
             fire_time_map2, [c, d] = calc_fire_time(exec_path2)
-            # Note:ÅĞ¶ÏÁ½¸öÇø¼äÊÇ·ñÖØµş
+            # Note:åˆ¤æ–­ä¸¤ä¸ªåŒºé—´æ˜¯å¦é‡å 
             overlap = min(b, d) - max(a, c)
-            if overlap > 0:  # ÈôÖØµşÔòÍ¨¹ı¸ÅÂÊ¼ÆËã
+            if overlap > 0:  # è‹¥é‡å åˆ™é€šè¿‡æ¦‚ç‡è®¡ç®—
                 if finish_earlier_probability(exec_path2, exec_path1) > 0.5:
                     exec_path1 = exec_path2
             else:
-                if a >= d:  # Èô²»ÖØµşÔòÖ±½Ó±È½Ï
+                if a >= d:  # è‹¥ä¸é‡å åˆ™ç›´æ¥æ¯”è¾ƒ
                     exec_path1 = exec_path2
             iter_num += 1
         return exec_path1
@@ -697,7 +697,7 @@ def get_early_prob(interval, intervals):
             falg += 1
     if falg == len(intervals):
         return 1
-    # ¼ä¸ô²»ÈßÓà,e.g.X<=[2,3] and X<= [4,6],Ôò[4,6]ÊÇÈßÓàµÄ
+    # é—´éš”ä¸å†—ä½™,e.g.X<=[2,3] and X<= [4,6],åˆ™[4,6]æ˜¯å†—ä½™çš„
     non_redu_intervals = []
     for index, [xi, yi] in enumerate(intervals):
         if not is_redu_interval(index, [xi, yi], intervals) and not xi >= y:
@@ -744,7 +744,7 @@ def is_redu_interval(index, interval, intervals):
     return False
 
 
-# ¼ÆËã[ai,bi]Ïà¶Ô[aj,bj]Íê³ÉÔçĞ©µÄ¸ÅÂÊ(¿¼ÂÇ»ı·ÖÇø¼ä·Ö¶ÎÇé¿ö)
+# è®¡ç®—[ai,bi]ç›¸å¯¹[aj,bj]å®Œæˆæ—©äº›çš„æ¦‚ç‡(è€ƒè™‘ç§¯åˆ†åŒºé—´åˆ†æ®µæƒ…å†µ)
 def finish_earlier(interval1, interval2):
     [ai, bi] = interval1
     [aj, bj] = interval2
@@ -778,7 +778,7 @@ def finish_earlier(interval1, interval2):
         return probability
 
 
-# ¼ÆËã[a,b]Ïà¶Ô[c,d]Íê³ÉÔçĞ©µÄ¸ÅÂÊ
+# è®¡ç®—[a,b]ç›¸å¯¹[c,d]å®Œæˆæ—©äº›çš„æ¦‚ç‡
 def finish_earlier_pre(interval1, interval2):
     [a, b] = interval1
     [c, d] = interval2
@@ -789,7 +789,7 @@ def finish_earlier_pre(interval1, interval2):
     return probability
 
 
-# ¼ÆËãexec_path1Íê³ÉÔçĞ©µÄ¸ÅÂÊ
+# è®¡ç®—exec_path1å®Œæˆæ—©äº›çš„æ¦‚ç‡
 def finish_earlier_probability(exec_path1, exec_path2):
     fire_time_map1, [a, b] = calc_fire_time(exec_path1)
     fire_time_map2, [c, d] = calc_fire_time(exec_path2)
@@ -800,7 +800,7 @@ def finish_earlier_probability(exec_path1, exec_path2):
     return probability
 
 
-# »ñÈ¡ÒÑ½â¾öµÄÖ´ĞĞÂ·¾¶(¼´½«±äÇ¨ºÍËüÇ°Ãæ²åÈëµÄÑÓÊ±±äÇ¨ºÏ²¢)
+# è·å–å·²è§£å†³çš„æ‰§è¡Œè·¯å¾„(å³å°†å˜è¿å’Œå®ƒå‰é¢æ’å…¥çš„å»¶æ—¶å˜è¿åˆå¹¶)
 def get_resolved_exec_path(exec_path: nt.OpenNet, exec_path_st: nt.OpenNet):
     resolved_exec_path = copy.deepcopy(exec_path)
     flows = exec_path.flows
@@ -825,7 +825,7 @@ def get_resolved_exec_path(exec_path: nt.OpenNet, exec_path_st: nt.OpenNet):
     return resolved_exec_path
 
 
-# 5.»ñÈ¡ÓÉÑÓÊ±±äÇ¨ÒıÈëµÄµÈ´ıÑÓÊ±--------------------------------------
+# 5.è·å–ç”±å»¶æ—¶å˜è¿å¼•å…¥çš„ç­‰å¾…å»¶æ—¶--------------------------------------
 def get_waiting_delay(exec_path: nt.OpenNet):
     exec_path_copy = copy.deepcopy(exec_path)
     for tran in exec_path_copy.trans:
@@ -836,13 +836,13 @@ def get_waiting_delay(exec_path: nt.OpenNet):
     return y
 
 
-# -------------------------------²âÊÔ---------------------------------#
+# -------------------------------æµ‹è¯•---------------------------------#
 
 if __name__ == '__main__':
 
-    # path = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/Ô­Ê¼Êı¾İ/Ca-1.xml'
+    # path = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/åŸå§‹æ•°æ®/Ca-1.xml'
 
-    # # 1. ´òÓ¡CERPĞÅÏ¢
+    # # 1. æ‰“å°CERPä¿¡æ¯
     # nets = ng.gen_nets(path)
     # comp_net = erpu.get_compose_net(nets)
     # comp_net.net_to_dot('abc', True)
@@ -850,13 +850,13 @@ if __name__ == '__main__':
     #       len(comp_net.places) + len(comp_net.res_places),
     #       len(comp_net.trans), len(comp_net.res_places))
 
-    # 2.²âÊÔÊÇ·ñÄÜ¹»ÊµÏÖÎŞ³åÍ»Ö´ĞĞ
+    # 2.æµ‹è¯•æ˜¯å¦èƒ½å¤Ÿå®ç°æ— å†²çªæ‰§è¡Œ
     # optimize_res_conf_exec_path(path)
 
     upper_bound = 31
     tran_number_map = {}
     for i in range(1, upper_bound):
-        path = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/Ô­Ê¼Êı¾İ/Ca-{}.xml'.format(i)
+        path = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/åŸå§‹æ•°æ®/Ca-{}.xml'.format(i)
         nets = ng.gen_nets(path)
         comp_net = erpu.get_compose_net(nets)
         trans = comp_net.trans
@@ -868,17 +868,17 @@ if __name__ == '__main__':
 
     tran_time_map = {}
     for i in range(1, upper_bound):
-        path = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/Ô­Ê¼Êı¾İ/Ca-{}.xml'.format(i)
+        path = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/åŸå§‹æ•°æ®/Ca-{}.xml'.format(i)
         nets = ng.gen_nets(path)
         comp_net = erpu.get_compose_net(nets)
         total_time = 0
-        for j in range(5):
-            start_time = time.time()  #¿ªÊ¼Ê±¼ä
-            # gen_resolved_CERP(path)
-            optimize_res_conf_exec_path(path)
-            end_time = time.time()  #½áÊøÊ±¼ä
+        for j in range(10):
+            start_time = time.time()  #å¼€å§‹æ—¶é—´
+            gen_resolved_CERP(path)
+            # optimize_res_conf_exec_path(path)
+            end_time = time.time()  #ç»“æŸæ—¶é—´
             total_time = total_time + (end_time - start_time) * 1000.0
-        avg_run_time = total_time / 5
+        avg_run_time = total_time / 10
         size = len(comp_net.trans)
         if size in tran_time_map.keys():
             tran_time_map[size] = tran_time_map[size] + avg_run_time
@@ -890,11 +890,11 @@ if __name__ == '__main__':
         avg_time = val / tran_number_map[key]
         tran_avg_time_map[key] = avg_time
 
-    csv_name = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/ÊµÑé½á¹û/avg_time.csv'
+    csv_name = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/å®éªŒç»“æœ/avg_time.csv'
     with open(csv_name, 'w') as f:
-        # 1.2»ùÓÚÎÄ¼ş¶ÔÏó¹¹½¨csvĞ´Èë¶ÔÏó
+        # 1.2åŸºäºæ–‡ä»¶å¯¹è±¡æ„å»ºcsvå†™å…¥å¯¹è±¡
         writer = csv.writer(f)
-        # 1.4ÌîÈëÄÚÈİ
+        # 1.4å¡«å…¥å†…å®¹
         for key, val in tran_avg_time_map.items():
             row = []
             row.append(key)
@@ -905,9 +905,9 @@ if __name__ == '__main__':
     # for exec_path in exec_paths:
     #     if res_suff_check(exec_path) == 'Resourced':
     #         continue
-    #     start_time = time.time()  #¿ªÊ¼Ê±¼ä
+    #     start_time = time.time()  #å¼€å§‹æ—¶é—´
     #     resolved_exec_path = gen_resolved_exec_path_NSGAII(exec_path)
-    #     end_time = time.time()  #½áÊøÊ±¼ä
+    #     end_time = time.time()  #ç»“æŸæ—¶é—´
     #     total_time = (end_time - start_time) * 1000.0
     #     print('total_time:', total_time)
     #     print('res_confs:', get_res_confs(resolved_exec_path))
@@ -916,32 +916,32 @@ if __name__ == '__main__':
     # for i in range(1, 15):
     #     if i in [5, 6, 7, 8]:
     #         continue
-    #     path = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/¹éµµ-À©Õ¹±äÇ¨ºÍ×ÊÔ´/Ca-{}.xml'.format(i)
+    #     path = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/å½’æ¡£-æ‰©å±•å˜è¿å’Œèµ„æº/Ca-{}.xml'.format(i)
 
     #     exec_path = gen_exec_paths(path)[0]
-    #     start_time = time.time()  #¿ªÊ¼Ê±¼ä
+    #     start_time = time.time()  #å¼€å§‹æ—¶é—´
     #     resolved_exec_path = gen_resolved_exec_path_NSGAII(exec_path)
-    #     end_time = time.time()  #½áÊøÊ±¼ä
+    #     end_time = time.time()  #ç»“æŸæ—¶é—´
     #     total_time = (end_time - start_time) * 1000.0
 
     #     text_EPA = 'Ca-{}: {},{},{} ms'.format(
     #         i, len(get_res_confs(resolved_exec_path)),
     #         calc_fire_time(resolved_exec_path)[1], total_time)
-    #     file = open(r'/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/ÊµÑé½á¹û/EPA.txt',
+    #     file = open(r'/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/å®éªŒç»“æœ/EPA.txt',
     #                 mode='a',
     #                 encoding='utf-8')
     #     file.write(text_EPA + '\n')
     #     file.close()
 
-    #     # 1.1´´½¨ÎÄ¼ş¶ÔÏó
-    #     csv_EPA = '/Users/moqi/Desktop/Ô­Ê¼Ä£ĞÍ/ÊµÑé½á¹û/csv½á¹û/Ca-{}.csv'.format(i)
+    #     # 1.1åˆ›å»ºæ–‡ä»¶å¯¹è±¡
+    #     csv_EPA = '/Users/moqi/Desktop/åŸå§‹æ¨¡å‹/å®éªŒç»“æœ/csvç»“æœ/Ca-{}.csv'.format(i)
     #     fire_time_map = calc_fire_time(resolved_exec_path)[0]
     #     with open(csv_EPA, 'w') as f:
-    #         # 1.2»ùÓÚÎÄ¼ş¶ÔÏó¹¹½¨csvĞ´Èë¶ÔÏó
+    #         # 1.2åŸºäºæ–‡ä»¶å¯¹è±¡æ„å»ºcsvå†™å…¥å¯¹è±¡
     #         writer = csv.writer(f)
-    #         # 1.3¹¹½¨ÁĞ±íÍ·
+    #         # 1.3æ„å»ºåˆ—è¡¨å¤´
     #         writer.writerow(['Tran', 'Min Firing Time', 'Max Firing Time'])
-    #         # 1.4ÌîÈëÄÚÈİ
+    #         # 1.4å¡«å…¥å†…å®¹
     #         for key in fire_time_map:
     #             row = []
     #             row.append(key)
@@ -967,7 +967,7 @@ if __name__ == '__main__':
     #     print('EPA exec time: ', calc_fire_time(resolved_exec_path)[1])
     #     print('\n................................................')
 
-    # path = '/Users/moqi/Desktop/ÁÙÊ±ÎÄ¼ş/Net 1.xml'
+    # path = '/Users/moqi/Desktop/ä¸´æ—¶æ–‡ä»¶/Net 1.xml'
     # path = '/Users/moqi/Desktop/Exam1 4.xml'
     # exec_paths = gen_exec_paths(path)
     # print(len(exec_paths))
@@ -980,21 +980,21 @@ if __name__ == '__main__':
 
     # res_confs = get_res_confs(exec_path)
     # fire_time_map, exec_time = calc_fire_time(exec_path)
-    # # Éî¿½±´exec_path
+    # # æ·±æ‹·è´exec_path
     # exec_path_copy = copy.deepcopy(exec_path)
     # index = 0
     # for [ti, tj] in res_confs:
     #     [s_ti, e_ti] = fire_time_map[ti]
     #     [s_tj, e_tj] = fire_time_map[tj]
-    #     # ÀûÓÃZengÂÛÎÄÖĞ·½·¨½â¾ö×ÊÔ´³åÍ»
+    #     # åˆ©ç”¨Zengè®ºæ–‡ä¸­æ–¹æ³•è§£å†³èµ„æºå†²çª
     #     first_tran = [ti, tj][random.randint(0, 1)]
     #     # print('first_tran: ', first_tran)
-    #     if first_tran == tj:  #tiÇ°Ãæ²åÈë
+    #     if first_tran == tj:  #tiå‰é¢æ’å…¥
     #         interval = [e_tj - s_ti, e_tj - s_ti]
     #         exec_path_copy = insert_delay_tran(index, interval, ti,
     #                                            exec_path_copy)
     #         index += 1
-    #     else:  #tjÇ°Ãæ²åÈë
+    #     else:  #tjå‰é¢æ’å…¥
     #         interval = [e_ti - s_tj, e_ti - s_tj]
     #         exec_path_copy = insert_delay_tran(index, interval, tj,
     #                                            exec_path_copy)
@@ -1004,9 +1004,9 @@ if __name__ == '__main__':
     # print('RCA exec time: ', calc_fire_time(exec_path_copy)[1])
 
     # exec_path1 = exec_paths[0]
-    # start_time = time.time()  #¿ªÊ¼Ê±¼ä
+    # start_time = time.time()  #å¼€å§‹æ—¶é—´
     # exec_path = gen_resolved_exec_path_NSGAII(exec_path1)
-    # end_time = time.time()  #½áÊøÊ±¼ä
+    # end_time = time.time()  #ç»“æŸæ—¶é—´
     # total_time = (end_time - start_time) * 1000.0
     # print('total_time:', total_time)
     # print('res_confs:', get_res_confs(exec_path))
@@ -1015,7 +1015,7 @@ if __name__ == '__main__':
 
     # optimize_res_conf_exec_path(path)
 
-    # # ´òÓ¡CERPĞÅÏ¢
+    # # æ‰“å°CERPä¿¡æ¯
     # nets = ng.gen_nets(path)
     # comp_net = erpu.get_compose_net(nets)
     # # comp_net.net_to_dot('abc', True)
@@ -1077,9 +1077,9 @@ if __name__ == '__main__':
     # print('non_dom fire_time_map: ', fire_time_map)
     # print('non_dom exec_time: ', exec_time)
 
-    # start_time = time.time()  #¿ªÊ¼Ê±¼ä
+    # start_time = time.time()  #å¼€å§‹æ—¶é—´
     # resol_CERP = gen_resolved_CERP(path)
-    # end_time = time.time()  #½áÊøÊ±¼ä
+    # end_time = time.time()  #ç»“æŸæ—¶é—´
     # total_time = (end_time - start_time) * 1000.0
     # print('total_time:', total_time)
 
